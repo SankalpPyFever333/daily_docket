@@ -1,7 +1,10 @@
 import "package:daily_docket/pages/show_all_note.dart";
+import "package:daily_docket/services/shared_pref.dart";
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/gestures.dart";
+import "package:random_string/random_string.dart";
+import "package:daily_docket/services/database.dart";
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -11,8 +14,6 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-
-
   String? name, email, password;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -60,7 +61,8 @@ class _SignupState extends State<Signup> {
         style: TextStyle(fontSize: 20, fontFamily: "Signi"),
       )));
 
-      Navigator.push(context, MaterialPageRoute(builder: (context) => ShowAllNote()));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ShowAllNote()));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -84,7 +86,6 @@ class _SignupState extends State<Signup> {
       }
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
