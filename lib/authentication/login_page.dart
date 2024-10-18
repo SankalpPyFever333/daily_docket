@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                     Text(
                       "Email",
                       style: TextStyle(
-                          color: Color(0xFFB91635),
+                          color: Color.fromARGB(255, 18, 255, 247),
                           fontSize: 23,
                           fontWeight: FontWeight.w500,
                           fontFamily: "Signi"),
@@ -115,6 +115,14 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     SizedBox(
                       height: 40,
+                    ),
+                    Text(
+                      "Password",
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 18, 255, 247),
+                          fontSize: 23,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "Signi"),
                     ),
                     TextFormField(
                       validator: (value) {
@@ -233,7 +241,7 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Are an Admin?",
+                            "Are you an Admin?",
                             style: TextStyle(
                               color: Color(0xFF311917),
                               fontSize: 17,

@@ -1,3 +1,4 @@
+import "package:daily_docket/authentication/login_page.dart";
 import "package:daily_docket/pages/show_all_note.dart";
 import "package:daily_docket/services/shared_pref.dart";
 import "package:flutter/material.dart";
@@ -130,7 +131,7 @@ class _SignupState extends State<Signup> {
                     Text(
                       "Name",
                       style: TextStyle(
-                          color: Color(0xFFB91635),
+                          color: Color.fromARGB(255, 18, 255, 247),
                           fontSize: 23,
                           fontWeight: FontWeight.w500,
                           fontFamily: "Signi"),
@@ -155,7 +156,7 @@ class _SignupState extends State<Signup> {
                     Text(
                       "Email",
                       style: TextStyle(
-                          color: Color(0xFFB91635),
+                          color: Color.fromARGB(255, 18, 255, 247),
                           fontSize: 23,
                           fontWeight: FontWeight.w500,
                           fontFamily: "Signi"),
@@ -180,7 +181,7 @@ class _SignupState extends State<Signup> {
                     Text(
                       "Password",
                       style: TextStyle(
-                          color: Color(0xFFB91635),
+                          color: Color.fromARGB(255, 18, 255, 247),
                           fontSize: 23,
                           fontWeight: FontWeight.w500,
                           fontFamily: "Signi"),
@@ -265,7 +266,10 @@ class _SignupState extends State<Signup> {
                                 ),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
-                                    Navigator.pop(context);
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => LoginPage()));
                                   }),
                           ]),
                         ),
