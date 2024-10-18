@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "626777238610",
+    "project_id": "dailydocket-84053",
+    "storage_bucket": "dailydocket-84053.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:626777238610:android:bb14a4e180a6fc928e038b",
+        "android_client_info": {
+          "package_name": "com.example.daily_docket"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnMPaOTxCYU_psYYvu77WkZpTqtOEMJk4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

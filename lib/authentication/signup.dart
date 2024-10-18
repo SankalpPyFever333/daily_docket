@@ -99,9 +99,9 @@ class _SignupState extends State<Signup> {
                 padding: EdgeInsets.only(top: 50, left: 30),
                 decoration: BoxDecoration(
                     gradient: LinearGradient(colors: [
-                  Color(0xFFB91635),
-                  Color(0xFF621d3c),
-                  Color(0xFF311917)
+                  Color(0xFF005082),
+                  Color(0xFF0083B0),
+                  Color(0xFF00B4DB)
                 ])),
                 child: Text(
                   "Create Your Account",
@@ -220,9 +220,9 @@ class _SignupState extends State<Signup> {
                         padding: EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           gradient: LinearGradient(colors: [
-                            Color(0xFFB91635),
-                            Color(0xFF621d3c),
-                            Color(0xFF311917)
+                            Color(0xFF005082),
+                            Color(0xFF0083B0),
+                            Color(0xFF00B4DB)
                           ]),
                           borderRadius: BorderRadius.circular(30),
                         ),
