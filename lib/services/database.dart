@@ -20,11 +20,11 @@ class DatabaseMethods {
         .add(userBookingIngoMap);
   }
 
-  Future<Stream<QuerySnapshot>> getBooking() async {
+  Future<Stream<QuerySnapshot>> getAllNotesForAdmin() async {
     return await FirebaseFirestore.instance.collection("usernotes").snapshots();
   }
 
-  Future deletebooking() async {
+  Future deleteNote() async {
     User? user = FirebaseAuth.instance.currentUser;
     String uid = '';
     if (user != null) {
@@ -34,5 +34,16 @@ class DatabaseMethods {
         .collection("usernotes")
         .doc(uid)
         .delete();
+  }
+  Future updateNote() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    String uid = '';
+    if (user != null) {
+      uid = user.uid;
+    }
+    return await FirebaseFirestore.instance
+        .collection("usernotes")
+        .doc(uid)
+        .update(data);
   }
 }
