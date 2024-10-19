@@ -52,20 +52,6 @@ class _ShowAllNoteState extends State<ShowAllNote> {
                             ])),
                         child: Column(
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(60),
-                                  child: Image.network(
-                                    ds["Image"],
-                                    height: 70,
-                                    width: 70,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ],
-                            ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -73,7 +59,7 @@ class _ShowAllNoteState extends State<ShowAllNote> {
                                   height: 10,
                                 ),
                                 Text(
-                                  "Service: " + ds["Service"],
+                                  "Title" + ds["title"],
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 24,
@@ -84,7 +70,7 @@ class _ShowAllNoteState extends State<ShowAllNote> {
                                   height: 5,
                                 ),
                                 Text(
-                                  "Name: " + ds["Username"],
+                                  "Description: " + ds["description"],
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 24,
@@ -106,7 +92,7 @@ class _ShowAllNoteState extends State<ShowAllNote> {
                                   height: 5,
                                 ),
                                 Text(
-                                  "Time: " + ds["Time"],
+                                  "Time: " + ds["timeOfTheDay"],
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 24,
@@ -115,14 +101,6 @@ class _ShowAllNoteState extends State<ShowAllNote> {
                                 ),
                                 SizedBox(
                                   height: 5,
-                                ),
-                                Text(
-                                  "email: " + ds["email"],
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: "Signi"),
                                 ),
                                 SizedBox(
                                   height: 20,
@@ -139,7 +117,7 @@ class _ShowAllNoteState extends State<ShowAllNote> {
                                           // width: MediaQuery.of(context).size.width,
                                           padding: EdgeInsets.all(20),
                                           decoration: BoxDecoration(
-                                            color: Color(0xFFdf711a),
+                                            color: Color(0xFF005082),
                                             borderRadius:
                                                 BorderRadius.circular(30),
                                           ),
@@ -157,7 +135,7 @@ class _ShowAllNoteState extends State<ShowAllNote> {
                                           // width: MediaQuery.of(context).size.width,
                                           padding: EdgeInsets.all(20),
                                           decoration: BoxDecoration(
-                                            color: Color(0xFFdf711a),
+                                            color: Color(0xFF005082),
                                             borderRadius:
                                                 BorderRadius.circular(30),
                                           ),
