@@ -1,3 +1,4 @@
+import 'package:daily_docket/pages/show_all_note.dart';
 import 'package:flutter/material.dart';
 import "package:daily_docket/services/database.dart";
 
@@ -18,6 +19,8 @@ class _CreateNoteByUserState extends State<CreateNoteByUser> {
     DateTime current_Time_Date =
         DateTime.now(); //pass this to date and time field in the document.
     TimeOfDay currentTime = TimeOfDay.now(); //give the current time.
+    String formattedDate =
+        "${current_Time_Date.year}-${current_Time_Date.month.toString().padLeft(2, '0')}-${current_Time_Date.day.toString().padLeft(2, '0')}";
 
     title = titleController.text;
     description = descController.text;
@@ -25,7 +28,7 @@ class _CreateNoteByUserState extends State<CreateNoteByUser> {
     Map<String, dynamic> userNoteInfoMap = {
       'title': title,
       'description': description,
-      'Date': current_Time_Date.toString(),
+      'Date': formattedDate,
       'timeOfTheDay': currentTime.format(context).toString(),
     };
 
@@ -37,7 +40,8 @@ class _CreateNoteByUserState extends State<CreateNoteByUser> {
       style: TextStyle(fontSize: 20, fontFamily: "Signi"),
     )));
 
-    Navigator.pop(context);
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ShowAllNote()));
   }
 
 // while creating note, pass time and date with the Map object.
@@ -47,6 +51,8 @@ class _CreateNoteByUserState extends State<CreateNoteByUser> {
     return Scaffold(
       appBar: AppBar(
           title: Container(
+              padding: EdgeInsets.all(20),
+              width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                   gradient: LinearGradient(colors: [
                 Color(0xFF005082),
@@ -65,6 +71,7 @@ class _CreateNoteByUserState extends State<CreateNoteByUser> {
         child: Form(
           key: _formkey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
@@ -107,7 +114,7 @@ class _CreateNoteByUserState extends State<CreateNoteByUser> {
                   }
                   return null;
                 },
-                controller: titleController,
+                controller: descController,
                 decoration: InputDecoration(
                   hintText: "description",
                   labelText: "Enter description",
@@ -117,7 +124,17 @@ class _CreateNoteByUserState extends State<CreateNoteByUser> {
               SizedBox(
                 height: 40,
               ),
-              ElevatedButton(onPressed: _submitNote(), child: Text("Add"))
+              ElevatedButton(
+                  onPressed: () async {
+                    _submitNote();
+                  },
+                  child: Text(
+                    "Add",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: "Signi",
+                        color: Color.fromARGB(255, 33, 255, 244)),
+                  ))
             ],
           ),
         ),

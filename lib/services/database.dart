@@ -50,7 +50,6 @@ class DatabaseMethods {
     String uid = '';
     if (user != null) {
       uid = user.uid;
-      print("noteId" + noteId);
     }
     return await FirebaseFirestore.instance
         .collection("usernotes")

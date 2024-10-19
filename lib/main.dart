@@ -1,6 +1,7 @@
 import 'package:daily_docket/Admin/admin_login.dart';
 import 'package:daily_docket/authentication/login_page.dart';
 import 'package:daily_docket/authentication/signup.dart';
+import 'package:daily_docket/pages/create_note.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import "firebase_options.dart";
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Signup(),
+      home: const LoginPage(),
     );
   }
 }

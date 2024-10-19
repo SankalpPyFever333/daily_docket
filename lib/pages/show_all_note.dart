@@ -1,4 +1,5 @@
 import "package:cloud_firestore/cloud_firestore.dart";
+import "package:daily_docket/authentication/login_page.dart";
 import "package:daily_docket/pages/create_note.dart";
 import "package:daily_docket/pages/update_note_page.dart";
 import "package:daily_docket/services/database.dart";
@@ -62,7 +63,7 @@ class _ShowAllNoteState extends State<ShowAllNote> {
                                   height: 10,
                                 ),
                                 Text(
-                                  "Title" + ds["title"],
+                                  "Title: " + ds["title"],
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 24,
@@ -182,6 +183,18 @@ class _ShowAllNoteState extends State<ShowAllNote> {
             Expanded(
               child: allNotesOfUser(),
             ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginPage()));
+                },
+                child: Text(
+                  "Logout",
+                  style: TextStyle(
+                      color: const Color.fromARGB(255, 36, 255, 219),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ))
           ],
         ),
       ),
