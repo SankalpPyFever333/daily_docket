@@ -37,6 +37,7 @@ class _ShowNotesToAdminState extends State<ShowNotesToAdmin> {
                   itemBuilder: (context, index) {
                     DocumentSnapshot ds = snapshot.data.docs[index];
                     String uid = ds['uid'];
+                    String noteID = ds.id;
 
                     return FutureBuilder<DocumentSnapshot>(
                         future: FirebaseFirestore.instance
@@ -151,7 +152,7 @@ class _ShowNotesToAdminState extends State<ShowNotesToAdmin> {
                                           GestureDetector(
                                             onTap: () async {
                                               await DatabaseMethods()
-                                                  .deleteNote();
+                                                  .deleteNote(noteID);
                                             },
                                             child: Container(
                                                 // width: MediaQuery.of(context).size.width,

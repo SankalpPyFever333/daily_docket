@@ -44,8 +44,8 @@ class _LoginPageState extends State<LoginPage> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(
           "internal server error! Try again later",
-          style:
-              TextStyle(fontFamily: "Signi", fontSize: 20, color: Colors.black),
+          style: TextStyle(
+              fontFamily: "Signi", fontSize: 20, color: Colors.blue[400]),
         )));
       }
     }
@@ -68,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                   Color(0xFF00B4DB)
                 ])),
                 child: Text(
-                  "Hello\nSign in",
+                  "Hello\nlog in",
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 32,
@@ -164,6 +164,7 @@ class _LoginPageState extends State<LoginPage> {
                           setState(() {
                             email = emailController.text;
                             password = passwordController.text;
+                            
                           });
                         }
                         userLogin();

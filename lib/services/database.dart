@@ -24,7 +24,7 @@ class DatabaseMethods {
     }
     userNoteInfoMap['uid'] = uid;
     return await FirebaseFirestore.instance
-        .collection('usernotes')  
+        .collection('usernotes')
         .add(userNoteInfoMap);
   }
 
@@ -39,23 +39,26 @@ class DatabaseMethods {
       uid = user.uid;
     }
 
-    return await FirebaseFirestore.instance.collection("usernotes").where('uid', isEqualTo: uid) .snapshots();
+    return await FirebaseFirestore.instance
+        .collection("usernotes")
+        .where('uid', isEqualTo: uid)
+        .snapshots();
   }
 
-  Future deleteNote() async {
+  Future deleteNote(String noteId) async {
     User? user = FirebaseAuth.instance.currentUser;
     String uid = '';
     if (user != null) {
       uid = user.uid;
+      print("noteId" + noteId);
     }
     return await FirebaseFirestore.instance
         .collection("usernotes")
-        .doc(uid)
+        .doc(noteId)
         .delete();
   }
 
-
-  Future updateNote(Map<String, dynamic>updateNoteObject) async {
+  Future updateNote(Map<String, dynamic> updateNoteObject) async {
     User? user = FirebaseAuth.instance.currentUser;
     String uid = '';
     if (user != null) {

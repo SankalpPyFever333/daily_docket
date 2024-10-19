@@ -38,18 +38,20 @@ class _ShowAllNoteState extends State<ShowAllNote> {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     DocumentSnapshot ds = snapshot.data.docs[index];
+                    String noteId = ds.id;
                     return Material(
                       elevation: 12,
                       borderRadius: BorderRadius.circular(20),
                       child: Container(
                         width: MediaQuery.of(context).size.width,
+                        margin: EdgeInsets.only(top: 15),
                         padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
                             gradient: LinearGradient(colors: [
-                              Color(0xFFB91635),
-                              Color(0xFF621d3c),
-                              Color(0xFF311917)
+                              Color(0xFF005082),
+                              Color(0xFF0083B0),
+                              Color(0xFF00B4DB)
                             ])),
                         child: Column(
                           children: [
@@ -112,7 +114,8 @@ class _ShowAllNoteState extends State<ShowAllNote> {
                                   children: [
                                     GestureDetector(
                                       onTap: () async {
-                                        await DatabaseMethods().deleteNote();
+                                        await DatabaseMethods()
+                                            .deleteNote(noteId);
                                       },
                                       child: Container(
                                           // width: MediaQuery.of(context).size.width,
@@ -179,7 +182,6 @@ class _ShowAllNoteState extends State<ShowAllNote> {
             Expanded(
               child: allNotesOfUser(),
             ),
-            SizedBox(height: 30),
           ],
         ),
       ),
