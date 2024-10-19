@@ -36,143 +36,164 @@ class _ShowNotesToAdminState extends State<ShowNotesToAdmin> {
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     DocumentSnapshot ds = snapshot.data.docs[index];
-                    return Material(
-                      elevation: 12,
-                      borderRadius: BorderRadius.circular(20),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
+                    String uid = ds['uid'];
+
+                    return FutureBuilder<DocumentSnapshot>(
+                        future: FirebaseFirestore.instance
+                            .collection("users")
+                            .doc(uid)
+                            .get(),
+                        builder: (context,
+                            AsyncSnapshot<DocumentSnapshot> userSnapshot) {
+                          if (!userSnapshot.hasData) {
+                            return Center(child: CircularProgressIndicator());
+                          }
+                          DocumentSnapshot userDoc = userSnapshot.data!;
+                          String userName = userDoc['name'];
+                          String email = userDoc['email'];
+
+                          return Material(
+                            elevation: 12,
                             borderRadius: BorderRadius.circular(20),
-                            gradient: LinearGradient(colors: [
-                              Color(0xFFB91635),
-                              Color(0xFF621d3c),
-                              Color(0xFF311917)
-                            ])),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(60),
-                                  child: Image.network(
-                                    ds["Image"],
-                                    height: 70,
-                                    width: 70,
-                                    fit: BoxFit.cover,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  gradient: LinearGradient(colors: [
+                                    Color(0xFFB91635),
+                                    Color(0xFF621d3c),
+                                    Color(0xFF311917)
+                                  ])),
+                              child: Column(
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      // here I have to display name and email fetched from users collection.
+
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+
+                                      Text(
+                                        "Name: " + userName,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "Signi"),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        "Email: " + email,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "Signi"),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        "Title" + ds["title"],
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "Signi"),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        "Description: " + ds["description"],
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "Signi"),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        "Date: " + ds["Date"],
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "Signi"),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        "Time: " + ds["timeOfTheDay"],
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: "Signi"),
+                                      ),
+
+                                      SizedBox(
+                                        height: 20,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () async {
+                                              await DatabaseMethods()
+                                                  .deleteNote();
+                                            },
+                                            child: Container(
+                                                // width: MediaQuery.of(context).size.width,
+                                                padding: EdgeInsets.all(20),
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xFF005082),
+                                                  borderRadius:
+                                                      BorderRadius.circular(30),
+                                                ),
+                                                child:
+                                                    Icon(Icons.delete_rounded)),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          UpdateNotePage()));
+                                            },
+                                            child: Container(
+                                                // width: MediaQuery.of(context).size.width,
+                                                padding: EdgeInsets.all(20),
+                                                decoration: BoxDecoration(
+                                                  color: Color(0xFF005082),
+                                                  borderRadius:
+                                                      BorderRadius.circular(30),
+                                                ),
+                                                child: Icon(Icons.edit)),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      )
+                                    ],
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  "Service: " + ds["Service"],
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: "Signi"),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "Name: " + ds["Username"],
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: "Signi"),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "Date: " + ds["Date"],
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: "Signi"),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "Time: " + ds["Time"],
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: "Signi"),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  "email: " + ds["email"],
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: "Signi"),
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () async {
-                                        await DatabaseMethods().deleteNote();
-                                      },
-                                      child: Container(
-                                          // width: MediaQuery.of(context).size.width,
-                                          padding: EdgeInsets.all(20),
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFF005082),
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                          ),
-                                          child: Icon(Icons.delete_rounded)),
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    UpdateNotePage()));
-                                      },
-                                      child: Container(
-                                          // width: MediaQuery.of(context).size.width,
-                                          padding: EdgeInsets.all(20),
-                                          decoration: BoxDecoration(
-                                            color: Color(0xFF005082),
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                          ),
-                                          child: Icon(Icons.edit)),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
+                          );
+                        });
                   })
               : Container();
         });

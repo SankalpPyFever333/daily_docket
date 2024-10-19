@@ -39,7 +39,7 @@ class DatabaseMethods {
       uid = user.uid;
     }
 
-    return FirebaseFirestore.instance.collection("usernotes").where("uid" , isEqualTo: uid).snapshots();
+    return await FirebaseFirestore.instance.collection("usernotes").where('uid', isEqualTo: uid) .snapshots();
   }
 
   Future deleteNote() async {
