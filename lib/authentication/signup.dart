@@ -64,7 +64,7 @@ class _SignupState extends State<Signup> {
       if (e.code == 'weak-password') {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(
-          "password is oo weak",
+          "password is too weak",
           style: TextStyle(fontSize: 20, fontFamily: "Signi"),
         )));
       } else if (e.code == "email-already-in-use") {
@@ -253,7 +253,7 @@ class _SignupState extends State<Signup> {
                               ),
                             ),
                             TextSpan(
-                                text: "SIGN UP",
+                                text: "LOG IN",
                                 style: TextStyle(
                                   color: Colors.blue,
                                   fontSize: 17,
@@ -265,7 +265,7 @@ class _SignupState extends State<Signup> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => ShowAllNote()));
+                                            builder: (context) => LoginPage()));
                                   }),
                           ]),
                         ),
