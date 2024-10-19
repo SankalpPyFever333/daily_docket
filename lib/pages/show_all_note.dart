@@ -1,4 +1,5 @@
 import "package:cloud_firestore/cloud_firestore.dart";
+import "package:daily_docket/pages/create_note.dart";
 import "package:daily_docket/pages/update_note_page.dart";
 import "package:daily_docket/services/database.dart";
 import "package:firebase_auth/firebase_auth.dart";
@@ -182,8 +183,14 @@ class _ShowAllNoteState extends State<ShowAllNote> {
           ],
         ),
       ),
-
-      // body: allNotesOfUser(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => CreateNoteByUser()));
+        },
+        tooltip: "add note",
+        child: Icon(Icons.add),
+      ),
     );
   }
 }
