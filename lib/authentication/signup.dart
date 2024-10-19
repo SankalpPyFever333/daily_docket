@@ -4,7 +4,6 @@ import "package:daily_docket/services/shared_pref.dart";
 import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/gestures.dart";
-import "package:random_string/random_string.dart";
 import "package:daily_docket/services/database.dart";
 
 class Signup extends StatefulWidget {
@@ -30,9 +29,7 @@ class _SignupState extends State<Signup> {
       if (email != null && password != null && name != null) {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email!, password: password!);
-      }
-
-      String id = randomAlphaNumeric(10); //generate a length 10 id
+      } //generate a length 10 id
 
       // saving data to device using shared_preference:
 
@@ -48,13 +45,12 @@ class _SignupState extends State<Signup> {
         "name": nameController.text,
         "email": emailController.text,
         "password": passwordController.text,
-        "id": id,
         "Image":
             "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600"
       };
 
       // add above data to collection:
-      await DatabaseMethods().addUserDetails(userInfo, id);
+      await DatabaseMethods().addUserDetails(userInfo);
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(
