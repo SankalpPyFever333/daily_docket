@@ -1,6 +1,7 @@
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:daily_docket/pages/update_note_page.dart";
 import "package:daily_docket/services/database.dart";
+import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 
 class ShowAllNote extends StatefulWidget {
@@ -14,7 +15,7 @@ class _ShowAllNoteState extends State<ShowAllNote> {
   Stream? notesStream;
 
   getontheload() async {
-    notesStream = await DatabaseMethods().getAllNotesForAdmin();
+    notesStream = await DatabaseMethods().getAllNotesOfUser();
     setState(() {});
   }
 
@@ -180,6 +181,8 @@ class _ShowAllNoteState extends State<ShowAllNote> {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: allNotesOfUser(),
+    );
   }
 }

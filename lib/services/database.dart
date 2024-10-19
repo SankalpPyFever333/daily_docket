@@ -8,20 +8,38 @@ class DatabaseMethods {
     if (user != null) {
       uid = user.uid;
     }
+    userInfoMap['uid'] = uid;
     return await FirebaseFirestore.instance
         .collection('users')
         .doc(uid)
         .set(userInfoMap);
   }
 
-  Future addUserNotes(Map<String, dynamic> userBookingIngoMap) async {
+  Future addUserNotes(Map<String, dynamic> userNoteInfoMap) async {
+    // add uid to the note map object.
+    User? user = FirebaseAuth.instance.currentUser;
+    String uid = '';
+    if (user != null) {
+      uid = user.uid;
+    }
+    userNoteInfoMap['uid'] = uid;
     return await FirebaseFirestore.instance
-        .collection('booking')
-        .add(userBookingIngoMap);
+        .collection('usernotes')  
+        .add(userNoteInfoMap);
   }
 
   Future<Stream<QuerySnapshot>> getAllNotesForAdmin() async {
     return await FirebaseFirestore.instance.collection("usernotes").snapshots();
+  }
+
+  Future<Stream<QuerySnapshot>> getAllNotesOfUser() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    String uid = '';
+    if (user != null) {
+      uid = user.uid;
+    }
+
+    return FirebaseFirestore.instance.collection("usernotes").where("uid" , isEqualTo: uid).snapshots();
   }
 
   Future deleteNote() async {
@@ -35,7 +53,9 @@ class DatabaseMethods {
         .doc(uid)
         .delete();
   }
-  Future updateNote() async {
+
+
+  Future updateNote(Map<String, dynamic>updateNoteObject) async {
     User? user = FirebaseAuth.instance.currentUser;
     String uid = '';
     if (user != null) {
@@ -44,6 +64,6 @@ class DatabaseMethods {
     return await FirebaseFirestore.instance
         .collection("usernotes")
         .doc(uid)
-        .update(data);
+        .update(updateNoteObject);
   }
 }

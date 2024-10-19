@@ -24,7 +24,7 @@ class _ShowNotesToAdminState extends State<ShowNotesToAdmin> {
     super.initState();
   }
 
-  Widget allNotesOfUser() {
+  Widget allNotesOfAllUsers() {
     return StreamBuilder(
         stream: notesStream,
         builder: (context, AsyncSnapshot snapshot) {
@@ -197,7 +197,7 @@ class _ShowNotesToAdminState extends State<ShowNotesToAdmin> {
             ),
             SizedBox(height: 30),
             Expanded(
-              child: allNotesOfUser(),
+              child: allNotesOfAllUsers(),
             ),
             SizedBox(height: 30),
           ],

@@ -253,7 +253,7 @@ class _SignupState extends State<Signup> {
                               ),
                             ),
                             TextSpan(
-                                text: "log in",
+                                text: "SIGN UP",
                                 style: TextStyle(
                                   color: Colors.blue,
                                   fontSize: 17,
@@ -265,7 +265,7 @@ class _SignupState extends State<Signup> {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => LoginPage()));
+                                            builder: (context) => ShowAllNote()));
                                   }),
                           ]),
                         ),
