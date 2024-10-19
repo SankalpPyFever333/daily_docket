@@ -160,7 +160,30 @@ class _ShowAllNoteState extends State<ShowAllNote> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: allNotesOfUser(),
+      body: Container(
+        margin: EdgeInsets.only(top: 60, left: 20, right: 20),
+        child: Column(
+          children: [
+            Center(
+              child: Text(
+                "All Notes",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Signi"),
+              ),
+            ),
+            SizedBox(height: 30),
+            Expanded(
+              child: allNotesOfUser(),
+            ),
+            SizedBox(height: 30),
+          ],
+        ),
+      ),
+
+      // body: allNotesOfUser(),
     );
   }
 }
