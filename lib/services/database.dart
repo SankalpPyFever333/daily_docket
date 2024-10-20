@@ -66,15 +66,11 @@ class DatabaseMethods {
     return docSnapshot;
   }
 
-  Future updateNote(Map<String, dynamic> updateNoteObject) async {
-    User? user = FirebaseAuth.instance.currentUser;
-    String uid = '';
-    if (user != null) {
-      uid = user.uid;
-    }
+  Future updateNote(Map<String, dynamic> updateNoteObject , String noteId) async {
+    
     return await FirebaseFirestore.instance
         .collection("usernotes")
-        .doc(uid)
+        .doc(noteId)
         .update(updateNoteObject);
   }
 }

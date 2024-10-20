@@ -1,4 +1,5 @@
 import "package:cloud_firestore/cloud_firestore.dart";
+import "package:daily_docket/pages/show_all_note.dart";
 import "package:daily_docket/services/database.dart";
 import "package:flutter/material.dart";
 
@@ -12,6 +13,9 @@ class UpdateNotePage extends StatefulWidget {
 
 class _UpdateNotePageState extends State<UpdateNotePage> {
   // fetch existing note and show to user and he can update it
+
+  String? title, description;
+
   DocumentSnapshot? docsnp;
   TextEditingController titleController = TextEditingController();
   TextEditingController descController = TextEditingController();
@@ -36,7 +40,28 @@ class _UpdateNotePageState extends State<UpdateNotePage> {
     TimeOfDay currentTime = TimeOfDay.now();
     String formattedDate =
         "${current_Time_Date.year}-${current_Time_Date.month.toString().padLeft(2, '0')}-${current_Time_Date.day.toString().padLeft(2, '0')}";
-    // update note in database
+    // update note in database and navigate to showall notes page.
+
+    title = titleController.text;
+    description = descController.text;
+
+    Map<String, dynamic> userNoteAfterUpdate = {
+      'title': title,
+      'description': description,
+      'Date': formattedDate,
+      'timeOfTheDay': currentTime.format(context).toString(),
+    };
+
+    await DatabaseMethods().updateNote(userNoteAfterUpdate, widget.noteId);
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+      "Note Updated",
+      style: TextStyle(fontSize: 20, fontFamily: "Signi"),
+    )));
+
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ShowAllNote()));
   }
 
   final _formKey = GlobalKey<FormState>();
