@@ -1,5 +1,6 @@
 import 'package:daily_docket/Admin/admin_login.dart';
 import 'package:daily_docket/authentication/login_page.dart';
+import 'package:daily_docket/authentication/phone_authentication.dart';
 import 'package:daily_docket/authentication/signup.dart';
 import 'package:daily_docket/pages/create_note.dart';
 import 'package:daily_docket/pages/update_note_page.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: const PhoneVerifyOtp(),
     );
   }
 }
