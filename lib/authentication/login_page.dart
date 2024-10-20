@@ -1,4 +1,5 @@
 import "package:daily_docket/Admin/admin_login.dart";
+import "package:daily_docket/authentication/phone_authentication.dart";
 import "package:daily_docket/authentication/signup.dart";
 import "package:daily_docket/pages/show_all_note.dart";
 import 'package:flutter/material.dart';
@@ -81,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                   EdgeInsets.only(top: MediaQuery.of(context).size.height / 4),
               padding: EdgeInsets.only(top: 40, left: 30, right: 30),
               decoration: BoxDecoration(
-                color: Colors.white,  
+                color: Colors.white,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20)),
@@ -251,7 +252,36 @@ class _LoginPageState extends State<LoginPage> {
                           )
                         ],
                       ),
-                    )
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Divider(
+                      color: Colors.black54,
+                      thickness: 2,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PhoneVerifyOtp()));
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Log in with phone number",
+                            style: TextStyle(
+                              color: Color(0xFF311917),
+                              fontSize: 17,
+                              fontFamily: "Signi",
+                              fontWeight: FontWeight.w600,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
