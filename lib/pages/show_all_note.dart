@@ -122,7 +122,8 @@ class _ShowAllNoteState extends State<ShowAllNote> {
                                           // width: MediaQuery.of(context).size.width,
                                           padding: EdgeInsets.all(20),
                                           decoration: BoxDecoration(
-                                            color: Color.fromARGB(255, 86, 87, 87),
+                                            color:
+                                                Color.fromARGB(255, 86, 87, 87),
                                             borderRadius:
                                                 BorderRadius.circular(30),
                                           ),
@@ -134,13 +135,14 @@ class _ShowAllNoteState extends State<ShowAllNote> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    UpdateNotePage()));
+                                                    UpdateNotePage(noteId: noteId,)));
                                       },
                                       child: Container(
                                           // width: MediaQuery.of(context).size.width,
                                           padding: EdgeInsets.all(20),
                                           decoration: BoxDecoration(
-                                            color: Color.fromARGB(255, 86, 87, 87),
+                                            color:
+                                                Color.fromARGB(255, 86, 87, 87),
                                             borderRadius:
                                                 BorderRadius.circular(30),
                                           ),

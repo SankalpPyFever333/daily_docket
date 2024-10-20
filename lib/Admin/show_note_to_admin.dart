@@ -183,7 +183,9 @@ class _ShowNotesToAdminState extends State<ShowNotesToAdmin> {
                                                   context,
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          UpdateNotePage()));
+                                                          UpdateNotePage(
+                                                            noteId: noteID,
+                                                          )));
                                             },
                                             child: Container(
                                                 // width: MediaQuery.of(context).size.width,

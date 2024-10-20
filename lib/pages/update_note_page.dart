@@ -1,17 +1,35 @@
+import "package:cloud_firestore/cloud_firestore.dart";
+import "package:daily_docket/services/database.dart";
 import "package:flutter/material.dart";
 
 class UpdateNotePage extends StatefulWidget {
-  const UpdateNotePage({super.key});
+  final String noteId;
+  const UpdateNotePage({required this.noteId});
 
   @override
   State<UpdateNotePage> createState() => _UpdateNotePageState();
 }
 
 class _UpdateNotePageState extends State<UpdateNotePage> {
-  // fetch existing note and show to user and he can update it.
-
+  // fetch existing note and show to user and he can update it
+  DocumentSnapshot? docsnp;
   TextEditingController titleController = TextEditingController();
   TextEditingController descController = TextEditingController();
+
+  getontheload() async {
+    docsnp = await DatabaseMethods().fetchNoteToUpdate(widget.noteId);
+
+    setState(() {
+      titleController.text = docsnp!['title'];
+      descController.text = docsnp!['description'];
+    });
+  }
+
+  @override
+  void initState() {
+    getontheload();
+    super.initState();
+  }
 
   _updateNote() async {
     DateTime current_Time_Date = DateTime.now();
@@ -108,7 +126,7 @@ class _UpdateNotePageState extends State<UpdateNotePage> {
                         border: OutlineInputBorder(),
                         hintText: "description",
                         labelText: "enter description",
-                        prefixIcon: Icon(Icons.title_rounded)),
+                        prefixIcon: Icon(Icons.description)),
                   ),
                   SizedBox(
                     height: 40,

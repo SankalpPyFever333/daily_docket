@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class DatabaseMethods {
   Future addUserDetails(Map<String, dynamic> userInfoMap) async {
@@ -55,6 +56,14 @@ class DatabaseMethods {
         .collection("usernotes")
         .doc(noteId)
         .delete();
+  }
+
+  Future<DocumentSnapshot> fetchNoteToUpdate(String noteId) async {
+    DocumentSnapshot docSnapshot = await FirebaseFirestore.instance
+        .collection("usernotes")
+        .doc(noteId)
+        .get();
+    return docSnapshot;
   }
 
   Future updateNote(Map<String, dynamic> updateNoteObject) async {
