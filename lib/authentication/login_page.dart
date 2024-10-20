@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(
-          "internal server error! Try again later",
+          e.code,
           style: TextStyle(
               fontFamily: "Signi", fontSize: 20, color: Colors.blue[400]),
         )));
@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                   EdgeInsets.only(top: MediaQuery.of(context).size.height / 4),
               padding: EdgeInsets.only(top: 40, left: 30, right: 30),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.white,  
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20)),
@@ -164,7 +164,6 @@ class _LoginPageState extends State<LoginPage> {
                           setState(() {
                             email = emailController.text;
                             password = passwordController.text;
-                            
                           });
                         }
                         userLogin();
