@@ -66,7 +66,8 @@ class _PhoneVerifyOtpState extends State<PhoneVerifyOtp> {
           style: TextStyle(fontFamily: "Signi"),
         )));
 
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowAllNote()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ShowAllNote()));
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(
