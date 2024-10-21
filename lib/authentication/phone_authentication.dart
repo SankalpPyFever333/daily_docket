@@ -38,8 +38,11 @@ class _PhoneVerifyOtpState extends State<PhoneVerifyOtp> {
             verificationId = verifyId;
           });
           otpSent = true;
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text("OTP sent successfully")));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+            "OTP sent successfully",
+            style: TextStyle(fontFamily: "Signi"),
+          )));
         },
         timeout: Duration(seconds: 60),
         codeAutoRetrievalTimeout: (String verifyId) {
@@ -47,6 +50,31 @@ class _PhoneVerifyOtpState extends State<PhoneVerifyOtp> {
             verificationId = verifyId;
           });
         });
+  }
+
+  Future<void> verifyOTP() async {
+    String enteredOTP = otpController.text.trim();
+    if (enteredOTP.isNotEmpty && enteredOTP.length == 6) {
+      try {
+        PhoneAuthCredential credential = PhoneAuthProvider.credential(
+            verificationId: verificationId, smsCode: enteredOTP);
+        await _auth.signInWithCredential(credential);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+          "verification successful",
+          style: TextStyle(fontFamily: "Signi"),
+        )));
+      } on FirebaseAuthException catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+          "OTP verification failed",
+          style: TextStyle(fontFamily: "Signi"),
+        )));
+      }
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("Invalid OTP")));
+    }
   }
 
   @override
@@ -119,31 +147,61 @@ class _PhoneVerifyOtpState extends State<PhoneVerifyOtp> {
                       SizedBox(
                         height: 40,
                       ),
-                      Text(
-                        "Enter OTP",
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 18, 255, 247),
-                            fontSize: 23,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: "Signi"),
-                      ),
-                      TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'please enter otp';
-                          }
-                          return null;
-                        },
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(6)
-                        ],
-                        controller: otpController,
-                        decoration: InputDecoration(
-                          labelText: "OTP",
-                        ),
-                      ),
+                      otpSent
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Enter OTP",
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 18, 255, 247),
+                                      fontSize: 23,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: "Signi"),
+                                ),
+                                TextFormField(
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'please enter otp';
+                                    }
+                                    return null;
+                                  },
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly,
+                                    LengthLimitingTextInputFormatter(6)
+                                  ],
+                                  controller: otpController,
+                                  decoration: InputDecoration(
+                                    labelText: "OTP",
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 40,
+                                ),
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  child: ElevatedButton(
+                                    onPressed: () async {
+                                      // call method for verifying the otp.
+                                      if (_formKey.currentState!.validate()) {
+                                        await verifyOTP();
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                        padding: EdgeInsets.all(10)),
+                                    child: Text(
+                                      "Verify",
+                                      style: TextStyle(
+                                          fontFamily: "Signi",
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            )
+                          : Container(),
                       SizedBox(
                         height: 40,
                       ),
