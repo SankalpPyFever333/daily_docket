@@ -1,3 +1,4 @@
+import 'package:daily_docket/pages/show_all_note.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,13 +18,13 @@ class _PhoneVerifyOtpState extends State<PhoneVerifyOtp> {
   final _formKey = GlobalKey<FormState>();
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  String phonenumber = '';
+  // String phonenumber = '';
   String verificationId = '';
   bool otpSent = false;
 
   Future<void> sendOTP() async {
     await _auth.verifyPhoneNumber(
-        phoneNumber: phonenumber,
+        phoneNumber: phoneNumberController.text.trim(),
         verificationCompleted: (PhoneAuthCredential credential) async {
           await _auth.signInWithCredential(credential);
         },
@@ -64,6 +65,8 @@ class _PhoneVerifyOtpState extends State<PhoneVerifyOtp> {
           "verification successful",
           style: TextStyle(fontFamily: "Signi"),
         )));
+
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowAllNote()));
       } on FirebaseAuthException catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(
@@ -134,8 +137,9 @@ class _PhoneVerifyOtpState extends State<PhoneVerifyOtp> {
                         },
                         keyboardType: TextInputType.number,
                         inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                          LengthLimitingTextInputFormatter(10)
+                          FilteringTextInputFormatter.allow(
+                              RegExp(r'^\+?[0-9]*')),
+                          LengthLimitingTextInputFormatter(13)
                         ],
                         controller: phoneNumberController,
                         decoration: InputDecoration(
