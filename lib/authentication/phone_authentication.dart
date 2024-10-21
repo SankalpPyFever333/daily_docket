@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class PhoneVerifyOtp extends StatefulWidget {
   const PhoneVerifyOtp({super.key});
@@ -11,10 +13,41 @@ class _PhoneVerifyOtpState extends State<PhoneVerifyOtp> {
   // get the phone number from user, if that phone number is present, then get the otp and logged in.
 
   TextEditingController phoneNumberController = TextEditingController();
-
+  TextEditingController otpController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  Future sendOTP() async {}
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  String phonenumber = '';
+  String verificationId = '';
+  bool otpSent = false;
+
+  Future<void> sendOTP() async {
+    await _auth.verifyPhoneNumber(
+        phoneNumber: phonenumber,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          await _auth.signInWithCredential(credential);
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          if (e.code == 'invalid-phone-number') {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text("Invalid phone number")));
+          }
+        },
+        codeSent: (String verifyId, int? resendToken) {
+          setState(() {
+            verificationId = verifyId;
+          });
+          otpSent = true;
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text("OTP sent successfully")));
+        },
+        timeout: Duration(seconds: 60),
+        codeAutoRetrievalTimeout: (String verifyId) {
+          setState(() {
+            verificationId = verifyId;
+          });
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +104,11 @@ class _PhoneVerifyOtpState extends State<PhoneVerifyOtp> {
                           }
                           return null;
                         },
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(10)
+                        ],
                         controller: phoneNumberController,
                         decoration: InputDecoration(
                           hintText: "+1234567890",
@@ -96,7 +134,12 @@ class _PhoneVerifyOtpState extends State<PhoneVerifyOtp> {
                           }
                           return null;
                         },
-                        controller: phoneNumberController,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                          LengthLimitingTextInputFormatter(6)
+                        ],
+                        controller: otpController,
                         decoration: InputDecoration(
                           labelText: "OTP",
                         ),
