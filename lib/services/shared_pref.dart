@@ -28,6 +28,11 @@ class SharedPreferenceHelper {
     return pref.setString(userImageKey, getUserImage);
   }
 
+  Future<void> saveLoginStatus()async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLoggedin' , true);
+  }
+
 // get user data from shared preference.
 
   Future<String?> getUserId() async {
@@ -48,5 +53,10 @@ class SharedPreferenceHelper {
   Future<String?> getUserImage() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     return pref.getString(userImageKey);
+  }
+
+  Future<bool?> getLoginStatus() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool("isLoggedin");
   }
 }
