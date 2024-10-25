@@ -2,6 +2,7 @@ import "package:daily_docket/Admin/admin_login.dart";
 import "package:daily_docket/authentication/phone_authentication.dart";
 import "package:daily_docket/authentication/signup.dart";
 import "package:daily_docket/pages/show_all_note.dart";
+import "package:daily_docket/services/shared_pref.dart";
 import 'package:flutter/material.dart';
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/gestures.dart";
@@ -26,6 +27,8 @@ class _LoginPageState extends State<LoginPage> {
           .signInWithEmailAndPassword(email: email!, password: password!);
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => ShowAllNote()));
+
+      await SharedPreferenceHelper().saveLoginStatus();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(

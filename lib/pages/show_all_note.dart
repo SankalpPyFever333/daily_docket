@@ -31,6 +31,12 @@ class _ShowAllNoteState extends State<ShowAllNote> {
     return StreamBuilder(
         stream: notesStream,
         builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
           return snapshot.hasData
               ? ListView.builder(
                   itemCount: snapshot.data.docs.length,
@@ -135,7 +141,9 @@ class _ShowAllNoteState extends State<ShowAllNote> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    UpdateNotePage(noteId: noteId,)));
+                                                    UpdateNotePage(
+                                                      noteId: noteId,
+                                                    )));
                                       },
                                       child: Container(
                                           // width: MediaQuery.of(context).size.width,

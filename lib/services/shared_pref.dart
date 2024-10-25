@@ -57,6 +57,6 @@ class SharedPreferenceHelper {
 
   Future<bool?> getLoginStatus() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool("isLoggedin");
+    return prefs.getBool("isLoggedin") ?? false;
   }
 }
