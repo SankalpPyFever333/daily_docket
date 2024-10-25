@@ -3,6 +3,7 @@ import "package:daily_docket/authentication/login_page.dart";
 import "package:daily_docket/pages/create_note.dart";
 import "package:daily_docket/pages/update_note_page.dart";
 import "package:daily_docket/services/database.dart";
+import "package:daily_docket/services/shared_pref.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 
@@ -194,8 +195,9 @@ class _ShowAllNoteState extends State<ShowAllNote> {
               child: allNotesOfUser(),
             ),
             ElevatedButton(
-                onPressed: () {
-                  Navigator.push(context,
+                onPressed: () async {
+                  await SharedPreferenceHelper().saveLogoutStatus();
+                  Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => LoginPage()));
                 },
                 child: Text(

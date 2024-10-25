@@ -32,6 +32,10 @@ class SharedPreferenceHelper {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('isLoggedin' , true);
   }
+  Future<void> saveLogoutStatus()async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLoggedin' , false);
+  }
 
 // get user data from shared preference.
 
