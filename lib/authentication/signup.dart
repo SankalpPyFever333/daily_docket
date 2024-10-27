@@ -14,9 +14,10 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-  String? name, email, password;
+  String? name, email, phoneNo, password;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController contactController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   final _formkey = GlobalKey<FormState>();
@@ -26,7 +27,10 @@ class _SignupState extends State<Signup> {
   registration() async {
     try {
       // below code stores the authentication details.
-      if (email != null && password != null && name != null) {
+      if (email != null &&
+          password != null &&
+          name != null &&
+          phoneNo != null) {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email!, password: password!);
       } //generate a length 10 id
@@ -44,6 +48,7 @@ class _SignupState extends State<Signup> {
       Map<String, dynamic> userInfo = {
         "name": nameController.text,
         "email": emailController.text,
+        "phone": contactController.text,
         "password": passwordController.text,
         "Image":
             "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=600"
@@ -169,6 +174,31 @@ class _SignupState extends State<Signup> {
                         hintText: "Email",
                         labelText: "Enter Email",
                         prefixIcon: Icon(Icons.mail_outline),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    Text(
+                      "Phone Number",
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 18, 255, 247),
+                          fontSize: 23,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: "Signi"),
+                    ),
+                    TextFormField(
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'please enter number';
+                        }
+                        return null;
+                      },
+                      controller: contactController,
+                      decoration: InputDecoration(
+                        hintText: "Phone",
+                        labelText: "Enter Phone",
+                        prefixIcon: Icon(Icons.phone_android_rounded),
                       ),
                     ),
                     SizedBox(

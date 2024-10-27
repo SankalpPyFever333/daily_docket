@@ -2,6 +2,7 @@ import "package:cloud_firestore/cloud_firestore.dart";
 import "package:daily_docket/authentication/login_page.dart";
 import "package:daily_docket/pages/update_note_page.dart";
 import "package:daily_docket/services/database.dart";
+import "package:daily_docket/services/shared_pref.dart";
 import "package:flutter/material.dart";
 
 class ShowNotesToAdmin extends StatefulWidget {
@@ -255,7 +256,8 @@ class _ShowNotesToAdminState extends State<ShowNotesToAdmin> {
               child: allNotesOfAllUsers(),
             ),
             ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  await SharedPreferenceHelper().saveLogoutStatus();
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => LoginPage()));
                 },

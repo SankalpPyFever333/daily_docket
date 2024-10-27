@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daily_docket/pages/show_all_note.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -23,34 +24,43 @@ class _PhoneVerifyOtpState extends State<PhoneVerifyOtp> {
   bool otpSent = false;
 
   Future<void> sendOTP() async {
-    await _auth.verifyPhoneNumber(
-        phoneNumber: phoneNumberController.text.trim(),
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          await _auth.signInWithCredential(credential);
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          if (e.code == 'invalid-phone-number') {
-            ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text("Invalid phone number")));
-          }
-        },
-        codeSent: (String verifyId, int? resendToken) {
-          setState(() {
-            verificationId = verifyId;
+    var result = await FirebaseFirestore.instance
+        .collection("users")
+        .where('phone', isEqualTo: phoneNumberController.text.trim())
+        .get();
+    if (result.docs.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Phone number not found')));
+    } else {
+      await _auth.verifyPhoneNumber(
+          phoneNumber: phoneNumberController.text.trim(),
+          verificationCompleted: (PhoneAuthCredential credential) async {
+            await _auth.signInWithCredential(credential);
+          },
+          verificationFailed: (FirebaseAuthException e) {
+            if (e.code == 'invalid-phone-number') {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Invalid phone number")));
+            }
+          },
+          codeSent: (String verifyId, int? resendToken) {
+            setState(() {
+              verificationId = verifyId;
+            });
+            otpSent = true;
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+              "OTP sent successfully",
+              style: TextStyle(fontFamily: "Signi"),
+            )));
+          },
+          timeout: Duration(seconds: 60),
+          codeAutoRetrievalTimeout: (String verifyId) {
+            setState(() {
+              verificationId = verifyId;
+            });
           });
-          otpSent = true;
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(
-            "OTP sent successfully",
-            style: TextStyle(fontFamily: "Signi"),
-          )));
-        },
-        timeout: Duration(seconds: 60),
-        codeAutoRetrievalTimeout: (String verifyId) {
-          setState(() {
-            verificationId = verifyId;
-          });
-        });
+    }
   }
 
   Future<void> verifyOTP() async {

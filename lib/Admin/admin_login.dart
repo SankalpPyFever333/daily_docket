@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daily_docket/Admin/show_note_to_admin.dart';
+import 'package:daily_docket/services/shared_pref.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import "package:flutter/gestures.dart";
@@ -149,7 +150,7 @@ class _AdminLoginState extends State<AdminLogin> {
 
   loginAdmin() {
     FirebaseFirestore.instance.collection("Admin").get().then((snapshot) {
-      snapshot.docs.forEach((result) {
+      snapshot.docs.forEach((result) async {
         if (result.data()['id'] != usernameController.text.trim()) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(
@@ -164,6 +165,7 @@ class _AdminLoginState extends State<AdminLogin> {
             style: TextStyle(fontFamily: "Signi"),
           )));
         } else {
+          await SharedPreferenceHelper().saveLoginStatus();
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => ShowNotesToAdmin()));
         }
