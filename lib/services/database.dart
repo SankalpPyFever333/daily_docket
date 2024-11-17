@@ -58,6 +58,18 @@ class DatabaseMethods {
         .delete();
   }
 
+  Future deleteUser(String userId) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    String uid = '';
+    if (user != null) {
+      uid = user.uid;
+    }
+    return await FirebaseFirestore.instance
+        .collection("users")
+        .doc(userId)
+        .delete();
+  }
+
   Future<DocumentSnapshot> fetchNoteToUpdate(String noteId) async {
     DocumentSnapshot docSnapshot = await FirebaseFirestore.instance
         .collection("usernotes")
@@ -66,11 +78,15 @@ class DatabaseMethods {
     return docSnapshot;
   }
 
-  Future updateNote(Map<String, dynamic> updateNoteObject , String noteId) async {
-    
+  Future updateNote(
+      Map<String, dynamic> updateNoteObject, String noteId) async {
     return await FirebaseFirestore.instance
         .collection("usernotes")
         .doc(noteId)
         .update(updateNoteObject);
+  }
+
+  Future fetchAlUser() async {
+    return await FirebaseFirestore.instance.collection("users").get();
   }
 }

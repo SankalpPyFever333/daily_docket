@@ -68,7 +68,10 @@ class _ShowAllNoteState extends State<ShowAllNote> {
                     return Material(
                       elevation: 12,
                       borderRadius: BorderRadius.circular(20),
-                      child: ds['title'].toString().contains(searchText)
+                      child: ds['title']
+                              .toString()
+                              .toLowerCase()
+                              .contains(searchText)
                           ? Container(
                               width: MediaQuery.of(context).size.width,
                               margin: EdgeInsets.only(top: 15),
@@ -381,7 +384,7 @@ class _ShowAllNoteState extends State<ShowAllNote> {
                               setState(() {
                                 searchText = value.trim().toLowerCase();
                               });
-                              print("searchText : " + searchText);
+                              // print("searchText : " + searchText);
                             },
                             decoration: InputDecoration(
                                 hintText: "search",

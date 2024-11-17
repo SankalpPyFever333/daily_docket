@@ -163,7 +163,7 @@ class _UpdateNotePageState extends State<UpdateNotePage> {
                         }
                       },
                       child: Text(
-                        "Add",
+                        "Update",
                         style: TextStyle(
                             fontSize: 20,
                             fontFamily: "Signi",

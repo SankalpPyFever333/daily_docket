@@ -238,7 +238,7 @@ class _ShowNotesToAdminState extends State<ShowNotesToAdmin> {
                         fontWeight: FontWeight.bold,
                         fontFamily: "Signi"),
                   ),
-                )
+                ),
               ],
             ),
             Center(

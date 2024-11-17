@@ -1,6 +1,7 @@
 import 'package:daily_docket/pages/show_all_note.dart';
 import 'package:flutter/material.dart';
 import "package:daily_docket/services/database.dart";
+import 'package:flutter/services.dart';
 
 class CreateNoteByUser extends StatefulWidget {
   const CreateNoteByUser({super.key});
@@ -95,6 +96,9 @@ class _CreateNoteByUserState extends State<CreateNoteByUser> {
                   labelText: "Enter title",
                   prefixIcon: Icon(Icons.abc_outlined),
                 ),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9]+$'))
+                ],
               ),
               SizedBox(
                 height: 40,

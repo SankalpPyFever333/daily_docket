@@ -5,6 +5,7 @@ import "package:flutter/material.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/gestures.dart";
 import "package:daily_docket/services/database.dart";
+import "package:flutter/services.dart";
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -33,7 +34,7 @@ class _SignupState extends State<Signup> {
           phoneNo != null) {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email!, password: password!);
-      } //generate a length 10 id
+      }
 
       // saving data to device using shared_preference:
 
@@ -152,7 +153,7 @@ class _SignupState extends State<Signup> {
                       ),
                     ),
                     SizedBox(
-                      height: 40,
+                      height: 30,
                     ),
                     Text(
                       "Email",
@@ -177,7 +178,7 @@ class _SignupState extends State<Signup> {
                       ),
                     ),
                     SizedBox(
-                      height: 40,
+                      height: 30,
                     ),
                     Text(
                       "Phone Number",
@@ -194,6 +195,12 @@ class _SignupState extends State<Signup> {
                         }
                         return null;
                       },
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                            RegExp(r'^\+?[0-9]*')),
+                        LengthLimitingTextInputFormatter(13)
+                      ],
                       controller: contactController,
                       decoration: InputDecoration(
                         hintText: "Phone",
@@ -202,7 +209,7 @@ class _SignupState extends State<Signup> {
                       ),
                     ),
                     SizedBox(
-                      height: 40,
+                      height: 30,
                     ),
                     Text(
                       "Password",
@@ -228,7 +235,7 @@ class _SignupState extends State<Signup> {
                       obscureText: true,
                     ),
                     SizedBox(
-                      height: 60,
+                      height: 30,
                     ),
                     GestureDetector(
                       onTap: () {
@@ -237,6 +244,7 @@ class _SignupState extends State<Signup> {
                             email = emailController.text;
                             name = nameController.text;
                             password = passwordController.text;
+                            phoneNo = contactController.text;
                           });
                         }
 
@@ -266,7 +274,7 @@ class _SignupState extends State<Signup> {
                       ),
                     ),
                     SizedBox(
-                      height: 40,
+                      height: 30,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
